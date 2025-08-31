@@ -54,6 +54,8 @@ void	read_file(int fd)
 				printf("Plano 👍\n");
 			else if (str[i] == 'c' && str[i + 1] == 'y')
 				printf("Cilindro 👍\n");
+			else
+				exit(printf("tem prefixo errado ai paizao"));
 		}
 		free(str);
 		str = get_next_line(fd);
