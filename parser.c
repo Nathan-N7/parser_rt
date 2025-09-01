@@ -1,9 +1,4 @@
-#include <stdio.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <string.h>
-#include <stdlib.h>
-#include "gnl/get_next_line.h"
+#include "parser.h"
 
 int	verify_file(char *file)
 {
@@ -29,10 +24,30 @@ int	verify_file(char *file)
 	return (fd);
 }
 
+t_ambient	creat_ambient(char *str)
+{
+	int			i;
+	char		**tok;
+	t_ambient	*abt;
+
+	abt = malloc(sizeof(t_ambient));
+	tok = ft_split(str, ' ');
+	i = 0;
+	while (tok[i])
+		i++;
+	if (i != 3)
+	{
+		printf("argumentos errados pro ambient paizao");
+		exit(1);
+	}
+	//free tok!!!
+}
+
 void	read_file(int fd)
 {
-	int	i;
+	int		i;
 	char	*str;
+	t_ambient	abt;
 
 	str = get_next_line(fd);
 	while (str)
@@ -43,7 +58,7 @@ void	read_file(int fd)
 		if ((str[i] > 96 && str[i] < 123) || (str[i] > 64 && str[1] < 91))
 		{
 			if (str[i] == 'A')
-				printf("Luz ambiente 👍\n");
+				abt = creat_ambient(&str[i]);
 			else if (str[i] == 'C')
 				printf("Camera 👍\n");
 			else if (str[i] == 'L')
