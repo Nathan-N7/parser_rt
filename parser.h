@@ -28,24 +28,42 @@ typedef struct s_light
     struct s_light *next;
 } t_light;
 
-typedef struct s_object
+typedef struct s_sphere
 {
-    char type[3];
+    double pos[3];
+    double radius;
+    int color[3];
+    struct s_sphere *next;
+} t_sphere;
+
+typedef struct s_plane
+{
+    double pos[3];
+    double orientation[3];
+    int color[3];
+    struct s_plane *next;
+} t_plane;
+
+typedef struct s_cylinder
+{
     double pos[3];
     double orientation[3];
     double radius;
     double height;
     int color[3];
-    struct s_object *next;
-} t_object;
+    struct s_cylinder *next;
+} t_cylinder;
 
 typedef struct s_scene
 {
+    t_sphere  *spheres;
+    t_plane   *planes;
+    t_cylinder *cylinders;
+    t_light   *lights;
+    t_camera  camera;
     t_ambient ambient;
-    t_camera camera;
-    t_light *lights;
-    t_object *objects;
 } t_scene;
+
 
 char	**ft_split(char const *str, char c);
 double      ft_atof(char *str);
@@ -58,7 +76,9 @@ void	parse_light(char *str, t_scene *scene);
 void	parse_camera(char *str, t_scene *scene);
 void	creat_ambient(char *str, t_scene *scene);
 void	parse_sphere(char *str, t_scene *scene);
-void free_objects(t_object *obj);
 void free_lights(t_light *light);
+void	parse_plane(char *str, t_scene *scene);
+void free_spheres(t_sphere *s);
+void free_planes(t_plane *p);
 
 #endif

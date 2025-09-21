@@ -59,17 +59,6 @@ void	convert_color(char *str, int *color)
 	free_split(tok);
 }
 
-void free_objects(t_object *obj)
-{
-    t_object *tmp;
-    while (obj)
-    {
-        tmp = obj->next;
-        free(obj);
-        obj = tmp;
-    }
-}
-
 void free_lights(t_light *light)
 {
     t_light *tmp;
@@ -78,5 +67,27 @@ void free_lights(t_light *light)
         tmp = light->next;
         free(light);
         light = tmp;
+    }
+}
+
+void free_spheres(t_sphere *s)
+{
+    t_sphere *tmp;
+    while (s)
+    {
+        tmp = s->next;
+        free(s);
+        s = tmp;
+    }
+}
+
+void free_planes(t_plane *p)
+{
+    t_plane *tmp;
+    while (p)
+    {
+        tmp = p->next;
+        free(p);
+        p = tmp;
     }
 }
