@@ -21,21 +21,26 @@ void	free_split(char **tok)
 	free(tok);
 }
 
-void	convert_vec(char *str, double *vec)
+void convert_vec(char *str, double *vec)
 {
-	char	**tok;
-	int		i;
+    char **tok;
+    int i;
 
-	tok = ft_split(str, ',');
-	i = 0;
-	while (tok[i])
-		i++;
-	if (i != 3)
-		exit(printf("vetor invalido paizao\n"));
-	vec[0] = ft_atof(tok[0]);
-	vec[1] = ft_atof(tok[1]);
-	vec[2] = ft_atof(tok[2]);
+    tok = ft_split(str, ',');
+    i = 0;
+    while (tok[i])
+        i++;
+    if (i != 3)
+    {
+        free_split(tok);
+        exit(printf("vetor invalido paizao\n"));
+    }
+    vec[0] = ft_atof(tok[0]);
+    vec[1] = ft_atof(tok[1]);
+    vec[2] = ft_atof(tok[2]);
+    free_split(tok);
 }
+
 
 void	convert_color(char *str, int *color)
 {
@@ -52,4 +57,26 @@ void	convert_color(char *str, int *color)
 	color[1] = ft_atoi(tok[1]);
 	color[2] = ft_atoi(tok[2]);
 	free_split(tok);
+}
+
+void free_objects(t_object *obj)
+{
+    t_object *tmp;
+    while (obj)
+    {
+        tmp = obj->next;
+        free(obj);
+        obj = tmp;
+    }
+}
+
+void free_lights(t_light *light)
+{
+    t_light *tmp;
+    while (light)
+    {
+        tmp = light->next;
+        free(light);
+        light = tmp;
+    }
 }

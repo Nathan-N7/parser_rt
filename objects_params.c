@@ -11,7 +11,10 @@ void	parse_sphere(char *str, t_scene *scene)
 	while (tok[i])
 		i++;
 	if (i != 4)
+    {
+        free_split(tok);
 		exit(printf("argumentos errados pra esfera paizao\n"));
+    }
 	obj = malloc(sizeof(t_object));
 	if (!obj)
 		exit(printf("malloc falhou paizao\n"));

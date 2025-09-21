@@ -89,4 +89,7 @@ int	main(int ac, char **av)
     scene.objects->color[0],
     scene.objects->color[1],
     scene.objects->color[2]);
+
+	free_objects(scene.objects);
+	free_lights(scene.lights);
 }

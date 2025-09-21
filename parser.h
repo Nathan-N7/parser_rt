@@ -58,5 +58,7 @@ void	parse_light(char *str, t_scene *scene);
 void	parse_camera(char *str, t_scene *scene);
 void	creat_ambient(char *str, t_scene *scene);
 void	parse_sphere(char *str, t_scene *scene);
+void free_objects(t_object *obj);
+void free_lights(t_light *light);
 
 #endif

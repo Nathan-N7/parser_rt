@@ -10,7 +10,10 @@ void	creat_ambient(char *str, t_scene *scene)
 	while (tok[i])
 		i++;
 	if (i != 3)
+	{
+		free_split(tok);
 		exit(printf("argumentos errados pro ambient paizao\n"));
+	}
 	scene->ambient.intensity = ft_atof(tok[1]);
 	convert_color(tok[2], scene->ambient.color);
 	free_split(tok);
@@ -26,7 +29,10 @@ void	parse_camera(char *str, t_scene *scene)
 	while (tok[i])
 		i++;
 	if (i != 4)
+	{
+		free_split(tok);
 		exit(printf("argumentos errados pra camera paizao\n"));
+	}
 	convert_vec(tok[1], scene->camera.pos);
 	convert_vec(tok[2], scene->camera.orientation);
 	scene->camera.fov = ft_atof(tok[3]);
@@ -44,7 +50,10 @@ void	parse_light(char *str, t_scene *scene)
 	while (tok[i])
 		i++;
 	if (i != 4)
+	{
+		free_split(tok);
 		exit(printf("argumentos errados pra luz paizao\n"));
+	}
 	light = malloc(sizeof(t_light));
 	if (!light)
 		exit(printf("malloc falhou paizao\n"));
