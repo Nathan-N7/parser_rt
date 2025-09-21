@@ -48,5 +48,14 @@ typedef struct s_scene
 } t_scene;
 
 char	**ft_split(char const *str, char c);
+double      ft_atof(char *str);
+int	ft_atoi(const char *nptr);
+int	ft_isprint(int c);
+void	free_split(char **tok);
+void	convert_vec(char *str, double *vec);
+void	convert_color(char *str, int *color);
+void	parse_light(char *str, t_scene *scene);
+void	parse_camera(char *str, t_scene *scene);
+void	creat_ambient(char *str, t_scene *scene);
 
 #endif

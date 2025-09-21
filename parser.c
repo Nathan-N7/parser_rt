@@ -24,30 +24,10 @@ int	verify_file(char *file)
 	return (fd);
 }
 
-t_ambient	creat_ambient(char *str)
-{
-	int			i;
-	char		**tok;
-	t_ambient	*abt;
-
-	abt = malloc(sizeof(t_ambient));
-	tok = ft_split(str, ' ');
-	i = 0;
-	while (tok[i])
-		i++;
-	if (i != 3)
-	{
-		printf("argumentos errados pro ambient paizao");
-		exit(1);
-	}
-	//free tok!!!
-}
-
-void	read_file(int fd)
+void	read_file(int fd, t_scene *scene)
 {
 	int		i;
 	char	*str;
-	t_ambient	abt;
 
 	str = get_next_line(fd);
 	while (str)
@@ -55,14 +35,20 @@ void	read_file(int fd)
 		i = 0;
 		while (str[i] == 32 || (str[i] > 6 && str[i] < 14))
 			i++;
-		if ((str[i] > 96 && str[i] < 123) || (str[i] > 64 && str[1] < 91))
+		if (str[i] == '\0')
+		{
+			free(str);
+			str = get_next_line(fd);
+			continue ;
+		}
+		if (str[i] >= 32 && str[i] <= 126)
 		{
 			if (str[i] == 'A')
-				abt = creat_ambient(&str[i]);
+				creat_ambient(&str[i], scene);
 			else if (str[i] == 'C')
-				printf("Camera 👍\n");
+				parse_camera(&str[i], scene);
 			else if (str[i] == 'L')
-				printf("Luz 👍\n");
+				parse_light(&str[i], scene);
 			else if (str[i] == 's' && str[i + 1] == 'p')
 				printf("Esfera 👍\n");
 			else if (str[i] == 'p' && str[i + 1] == 'l')
@@ -70,26 +56,43 @@ void	read_file(int fd)
 			else if (str[i] == 'c' && str[i + 1] == 'y')
 				printf("Cilindro 👍\n");
 			else
-				exit(printf("tem prefixo errado ai paizao"));
+				exit(printf("tem prefixo errado ai paizao\n"));
 		}
 		free(str);
 		str = get_next_line(fd);
 	}
 }
 
-void	parser_rt(char *file)
+void	parser_rt(char *file, t_scene *scene)
 {
 	int	fd;
 
 	fd = verify_file(file);
-	read_file(fd);
-	close (fd);
+	scene->lights = NULL;
+	scene->objects = NULL;
+	read_file(fd, scene);
+	close(fd);
 }
 
-
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
+	t_scene	scene;
+
 	if (ac != 2)
-		return (printf("ta errado isso ai"), 1);
-	parser_rt(av[1]);
+		return (printf("ta errado isso ai\n"), 1);
+	parser_rt(av[1], &scene);
+	printf("Ambient: %f (%d,%d,%d)\n",
+		scene.ambient.intensity,
+		scene.ambient.color[0],
+		scene.ambient.color[1],
+		scene.ambient.color[2]);
+	printf("Camera: pos=(%f,%f,%f), ori=(%f,%f,%f), fov=%f\n",
+		scene.camera.pos[0], scene.camera.pos[1], scene.camera.pos[2],
+		scene.camera.orientation[0], scene.camera.orientation[1], scene.camera.orientation[2],
+		scene.camera.fov);
+	if (scene.lights)
+		printf("Luz: pos=(%f,%f,%f), intensity=%f, color=(%d,%d,%d)\n",
+			scene.lights->pos[0], scene.lights->pos[1], scene.lights->pos[2],
+			scene.lights->intensity,
+			scene.lights->color[0], scene.lights->color[1], scene.lights->color[2]);
 }
