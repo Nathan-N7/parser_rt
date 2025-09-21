@@ -50,7 +50,7 @@ void	read_file(int fd, t_scene *scene)
 			else if (str[i] == 'L')
 				parse_light(&str[i], scene);
 			else if (str[i] == 's' && str[i + 1] == 'p')
-				printf("Esfera 👍\n");
+				parse_sphere(&str[i], scene);
 			else if (str[i] == 'p' && str[i + 1] == 'l')
 				printf("Plano 👍\n");
 			else if (str[i] == 'c' && str[i + 1] == 'y')
@@ -81,18 +81,12 @@ int	main(int ac, char **av)
 	if (ac != 2)
 		return (printf("ta errado isso ai\n"), 1);
 	parser_rt(av[1], &scene);
-	printf("Ambient: %f (%d,%d,%d)\n",
-		scene.ambient.intensity,
-		scene.ambient.color[0],
-		scene.ambient.color[1],
-		scene.ambient.color[2]);
-	printf("Camera: pos=(%f,%f,%f), ori=(%f,%f,%f), fov=%f\n",
-		scene.camera.pos[0], scene.camera.pos[1], scene.camera.pos[2],
-		scene.camera.orientation[0], scene.camera.orientation[1], scene.camera.orientation[2],
-		scene.camera.fov);
-	if (scene.lights)
-		printf("Luz: pos=(%f,%f,%f), intensity=%f, color=(%d,%d,%d)\n",
-			scene.lights->pos[0], scene.lights->pos[1], scene.lights->pos[2],
-			scene.lights->intensity,
-			scene.lights->color[0], scene.lights->color[1], scene.lights->color[2]);
+	printf("Sphere -> pos: %.2f, %.2f, %.2f | radius: %.2f | color: %d,%d,%d\n",
+    scene.objects->pos[0],
+    scene.objects->pos[1],
+    scene.objects->pos[2],
+    scene.objects->radius,
+    scene.objects->color[0],
+    scene.objects->color[1],
+    scene.objects->color[2]);
 }

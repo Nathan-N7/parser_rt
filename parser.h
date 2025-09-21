@@ -57,5 +57,6 @@ void	convert_color(char *str, int *color);
 void	parse_light(char *str, t_scene *scene);
 void	parse_camera(char *str, t_scene *scene);
 void	creat_ambient(char *str, t_scene *scene);
+void	parse_sphere(char *str, t_scene *scene);
 
 #endif
