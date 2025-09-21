@@ -54,7 +54,7 @@ void	read_file(int fd, t_scene *scene)
 			else if (str[i] == 'p' && str[i + 1] == 'l')
 				parse_plane(&str[i], scene);
 			else if (str[i] == 'c' && str[i + 1] == 'y')
-				printf("Cilindro 👍\n");
+				parse_cylinder(&str[i], scene);
 			else
 				exit(printf("tem prefixo errado ai paizao\n"));
 		}
@@ -71,10 +71,10 @@ void parser_rt(char *file, t_scene *scene)
     scene->lights = NULL;
     scene->spheres = NULL;
     scene->planes = NULL;
+	scene->cylinders = NULL;
     read_file(fd, scene);
     close(fd);
 }
-
 
 int	main(int ac, char **av)
 {
@@ -103,8 +103,18 @@ int	main(int ac, char **av)
             pl->color[0], pl->color[1], pl->color[2]);
         pl = pl->next;
     }
-
+	t_cylinder *cy = scene.cylinders;
+	while (cy)
+	{
+    	printf("Cylinder -> pos: %.2f, %.2f, %.2f | orientation: %.2f, %.2f, %.2f | radius: %.2f | height: %.2f | color: %d,%d,%d\n",
+        	cy->pos[0], cy->pos[1], cy->pos[2],
+        	cy->orientation[0], cy->orientation[1], cy->orientation[2],
+        	cy->radius, cy->height,
+        	cy->color[0], cy->color[1], cy->color[2]);
+    	cy = cy->next;
+	}
     free_spheres(scene.spheres);
     free_planes(scene.planes);
     free_lights(scene.lights);
+	free_cylinders(scene.cylinders);
 }

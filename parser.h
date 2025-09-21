@@ -80,5 +80,7 @@ void free_lights(t_light *light);
 void	parse_plane(char *str, t_scene *scene);
 void free_spheres(t_sphere *s);
 void free_planes(t_plane *p);
+void parse_cylinder(char *str, t_scene *scene);
+void	free_cylinders(t_cylinder *cy);
 
 #endif

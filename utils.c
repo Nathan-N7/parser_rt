@@ -91,3 +91,17 @@ void free_planes(t_plane *p)
         p = tmp;
     }
 }
+
+
+void	free_cylinders(t_cylinder *cy)
+{
+	t_cylinder *tmp;
+
+	while (cy)
+	{
+		tmp = cy->next;
+		free(cy);
+		cy = tmp;
+	}
+}
+
