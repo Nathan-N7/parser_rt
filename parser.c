@@ -1,5 +1,14 @@
 #include "parser.h"
 
+
+void	all_free(t_scene *scene)
+{
+	free_spheres(scene->spheres);
+    free_planes(scene->planes);
+    free_lights(scene->lights);
+	free_cylinders(scene->cylinders);
+}
+
 int	verify_file(char *file)
 {
 	int	fd;
@@ -56,7 +65,14 @@ void	read_file(int fd, t_scene *scene)
 			else if (str[i] == 'c' && str[i + 1] == 'y')
 				parse_cylinder(&str[i], scene);
 			else
-				exit(printf("tem prefixo errado ai paizao\n"));
+			{
+				all_free(scene);
+				free(str);
+				while ((str = get_next_line(fd)))
+        			free(str);
+				printf("tem prefixo errado ai paizao\n");
+				exit (1);
+			}
 		}
 		free(str);
 		str = get_next_line(fd);
@@ -113,8 +129,5 @@ int	main(int ac, char **av)
         	cy->color[0], cy->color[1], cy->color[2]);
     	cy = cy->next;
 	}
-    free_spheres(scene.spheres);
-    free_planes(scene.planes);
-    free_lights(scene.lights);
-	free_cylinders(scene.cylinders);
+    all_free(&scene);
 }

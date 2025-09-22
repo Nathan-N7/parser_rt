@@ -92,7 +92,6 @@ void free_planes(t_plane *p)
     }
 }
 
-
 void	free_cylinders(t_cylinder *cy)
 {
 	t_cylinder *tmp;
