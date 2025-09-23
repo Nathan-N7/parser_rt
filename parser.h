@@ -82,5 +82,6 @@ void free_spheres(t_sphere *s);
 void free_planes(t_plane *p);
 void parse_cylinder(char *str, t_scene *scene);
 void	free_cylinders(t_cylinder *cy);
+void	all_free(t_scene *scene);
 
 #endif

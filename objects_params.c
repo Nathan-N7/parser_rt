@@ -13,6 +13,7 @@ void parse_sphere(char *str, t_scene *scene)
     if (i != 4)
     {
         free_split(tok);
+        all_free(scene);
         exit(printf("argumentos errados pra esfera paizao\n"));
     }
     sp = malloc(sizeof(t_sphere));
@@ -40,6 +41,7 @@ void parse_plane(char *str, t_scene *scene)
     if (i != 4)
     {
         free_split(tok);
+        all_free(scene);
         exit(printf("argumentos errados pro plano paizao\n"));
     }
     pl = malloc(sizeof(t_plane));
@@ -66,6 +68,7 @@ void parse_cylinder(char *str, t_scene *scene)
     if (i != 6)
     {
         free_split(tok);
+        all_free(scene);
         exit(printf("argumentos errados pro cilindro paizao\n"));
     }
     cy = malloc(sizeof(t_cylinder));

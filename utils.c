@@ -1,6 +1,24 @@
 #include "parser.h"
 
 
+static int	check_commas(char *str)
+{
+	int	i;
+
+	if (!str || !*str)
+		return (0);
+	if (str[0] == ',' || str[ft_strlen(str) - 1] == ',')
+		return (0);
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == ',' && str[i + 1] == ',')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	ft_isprint(int c)
 {
 	if (c >= 32 && c <= 126)
@@ -26,11 +44,13 @@ void convert_vec(char *str, double *vec)
     char **tok;
     int i;
 
+    if (!check_commas(str))
+		exit(printf("vetor invalido paizao\n"));
     tok = ft_split(str, ',');
     i = 0;
     while (tok[i])
         i++;
-    if (i != 3)
+    if (i != 3 || !*tok[0] || !*tok[1] || !*tok[2])
     {
         free_split(tok);
         exit(printf("vetor invalido paizao\n"));
@@ -47,6 +67,8 @@ void	convert_color(char *str, int *color)
 	char	**tok;
 	int		i;
 
+    if (!check_commas(str))
+		exit(printf("cor invalida paizao\n"));
 	tok = ft_split(str, ',');
 	i = 0;
 	while (tok[i])
@@ -102,5 +124,13 @@ void	free_cylinders(t_cylinder *cy)
 		free(cy);
 		cy = tmp;
 	}
+}
+
+void	all_free(t_scene *scene)
+{
+	free_spheres(scene->spheres);
+    free_planes(scene->planes);
+    free_lights(scene->lights);
+	free_cylinders(scene->cylinders);
 }
 

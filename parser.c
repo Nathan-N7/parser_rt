@@ -1,14 +1,5 @@
 #include "parser.h"
 
-
-void	all_free(t_scene *scene)
-{
-	free_spheres(scene->spheres);
-    free_planes(scene->planes);
-    free_lights(scene->lights);
-	free_cylinders(scene->cylinders);
-}
-
 int	verify_file(char *file)
 {
 	int	fd;
