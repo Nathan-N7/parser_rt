@@ -1,7 +1,7 @@
 #include "parser.h"
 
 
-static int	check_commas(char *str)
+int	check_commas(char *str)
 {
 	int	i;
 
@@ -39,46 +39,51 @@ void	free_split(char **tok)
 	free(tok);
 }
 
-void convert_vec(char *str, double *vec)
+int convert_vec(char *str, double *vec)
 {
     char **tok;
     int i;
 
     if (!check_commas(str))
-		exit(printf("vetor invalido paizao\n"));
+		return (printf("vetor invalido paizao\n"), 0);
     tok = ft_split(str, ',');
     i = 0;
     while (tok[i])
         i++;
-    if (i != 3 || !*tok[0] || !*tok[1] || !*tok[2])
+    if (i != 3)
     {
         free_split(tok);
-        exit(printf("vetor invalido paizao\n"));
+        return (printf("vetor invalido paizao\n"), 0);
     }
     vec[0] = ft_atof(tok[0]);
     vec[1] = ft_atof(tok[1]);
     vec[2] = ft_atof(tok[2]);
     free_split(tok);
+    return (1);
 }
 
 
-void	convert_color(char *str, int *color)
+int	convert_color(char *str, int *color)
 {
 	char	**tok;
 	int		i;
 
     if (!check_commas(str))
-		exit(printf("cor invalida paizao\n"));
-	tok = ft_split(str, ',');
+		return (printf("cor invalida paizao\n"), 0);
+    tok = ft_split(str, ',');
 	i = 0;
 	while (tok[i])
 		i++;
 	if (i != 3)
-		exit(printf("cor invalida paizao\n"));
+    {
+        free_split(tok);
+		return (printf("cor invalida paizao\n"), 0);
+    }
 	color[0] = ft_atoi(tok[0]);
 	color[1] = ft_atoi(tok[1]);
 	color[2] = ft_atoi(tok[2]);
 	free_split(tok);
+    return (1);
 }
 
 void free_lights(t_light *light)

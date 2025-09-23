@@ -44,17 +44,17 @@ void	read_file(int fd, t_scene *scene)
 		if (str[i] >= 32 && str[i] <= 126)
 		{
 			if (str[i] == 'A')
-				creat_ambient(&str[i], scene);
+				creat_ambient(&str[i], scene, str, fd);
 			else if (str[i] == 'C')
-				parse_camera(&str[i], scene);
+				parse_camera(&str[i], scene, str, fd);
 			else if (str[i] == 'L')
-				parse_light(&str[i], scene);
+				parse_light(&str[i], scene, str, fd);
 			else if (str[i] == 's' && str[i + 1] == 'p')
-				parse_sphere(&str[i], scene);
+				parse_sphere(&str[i], scene, str, fd);
 			else if (str[i] == 'p' && str[i + 1] == 'l')
-				parse_plane(&str[i], scene);
+				parse_plane(&str[i], scene, str, fd);
 			else if (str[i] == 'c' && str[i + 1] == 'y')
-				parse_cylinder(&str[i], scene);
+				parse_cylinder(&str[i], scene, str, fd);
 			else
 			{
 				all_free(scene);
@@ -121,4 +121,5 @@ int	main(int ac, char **av)
     	cy = cy->next;
 	}
     all_free(&scene);
+	return (1);
 }
